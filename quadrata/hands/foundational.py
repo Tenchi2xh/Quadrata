@@ -24,6 +24,15 @@ short_stem = Letter(
         (-cl - 0.5, cy)
     ]
 )
+letter_n = short_stem.add_relative(n_curve, (cl + sw, 0))
+letter_m = letter_n.add_relative(n_curve, (2.5*sw, 0))
 
-letter_n = short_stem.add_relative(n_curve, (sw, 0))
-letter_m = letter_n.add_relative(n_curve, (2*sw, 0))
+foundational = Hand(name="Foundational Hand",
+                    nib=nib,
+                    xheight=xh,
+                    em=sw * 6)
+
+foundational.glyphs = {
+    "n": letter_n,
+    "m": letter_m
+}

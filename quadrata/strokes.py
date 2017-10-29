@@ -16,6 +16,7 @@ class Nib(object):
         self.offset_x = int(width * math.cos(self.angle))
         self.offset_y = int(width * -math.sin(self.angle))
         self.stem_width = width * math.cos(self.angle)  # cos(a) = stem / width
+        self.height = width * math.sin(self.angle)
 
     def _format_offsets(self, angle, width, sign):
         return "l %s, %s" % (str(sign * width * math.cos(angle)),
@@ -106,6 +107,15 @@ class Letter(object):
                       self.offset_pairs[-1][1] + offset_pair[1])
         return Letter(self.strokes + [stroke],
                       self.offset_pairs + [new_offset])
+
+
+class Hand(object):
+    def __init__(self, name, nib, xheight, em, glyphs=None):
+        self.name = name
+        self.nib = nib
+        self.xheight = xheight + nib.height
+        self.em = em
+        self.glyphs = glyphs or {}
 
 
 _short = lambda command: lambda *values: Command(command, *values)
