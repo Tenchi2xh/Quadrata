@@ -11,3 +11,4 @@
     - Produces an HTML file with the svg in it for styling
     - Remove style from path itself, do it in CSS
     - On hover: hide lines, use fill instead
+- Variable angle
