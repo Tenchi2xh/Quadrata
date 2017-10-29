@@ -13,6 +13,7 @@ class Nib(object):
         self.angle = math.radians(angle)
         self.offset_x = int(width * math.cos(self.angle))
         self.offset_y = int(width * -math.sin(self.angle))
+        self.stem_width = width / math.cos(self.angle)  # cos(a) = stem / width
 
     def offsets(self, sign=1):
         return "l %d, %d" % (sign * self.offset_x, sign * self.offset_y)
