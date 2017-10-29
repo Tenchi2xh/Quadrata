@@ -94,6 +94,12 @@ class Letter(object):
             group.add(path)
         return group
 
+    def path(self, nib):
+        paths = []
+        for stroke, offsets in zip(self.strokes, self.offset_pairs):
+            paths.append(stroke.path(nib, offsets=offsets))
+        return " ".join(paths)
+
     def combine(self, other):
         return Letter(self.strokes + other.strokes,
                       self.offset_pairs + other.offset_pairs)
