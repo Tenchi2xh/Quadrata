@@ -12,7 +12,7 @@ de = nw * 2  # Descender
 cy = cl * math.tan(nib.angle)  # Vertical offset of the start of the club
 cm = nib.height + cy  # Vertical offset of the middle of the club
 sh = xh - cy - cl # Height of the stem starting from the base of the club
-club = Stroke(l(cl, cl))
+club = Stroke(q(cl / 2 + 2, cl / 2 - 2, cl, cl))
 
 tail = c(0, 7, 15, 10, 20, 5)
 
@@ -27,10 +27,10 @@ descender_stem_without_club = Stroke(v(xh + de), tail)
 
 short_stem = (Letter()
     .add(short_stem_without_club)
-    .add(club, (-cl - 0.5, cy)))
+    .add(club, (-cl - 0.3, cy + 0.2)))
 short_stem_long_tail = (Letter()
     .add(short_stem_without_club_long_tail)
-    .add(club, (-cl - 0.5, cy)))
+    .add(club, (-cl - 0.3, cy + 0.2)))
 letter_n = short_stem.add_relative(n_curve, (cl + sw, 0))
 letter_m = letter_n.add_relative(n_curve, (3 * sw, 0))
 letter_q = (Letter()
