@@ -14,7 +14,7 @@ cm = nib.height + cy  # Vertical offset of the middle of the club
 sh = xh - cy - cl # Height of the stem starting from the base of the club
 club = Stroke(l(cl, cl))
 
-tail = q(5, 10, 20, 5)
+tail = c(0, 7, 15, 10, 20, 5)
 
 n_curve = Stroke(c(sw, -cl, 2*sw, -cl, 2*sw, cl), v(sh), tail)
 u_curve = Stroke(c(0, cl, 1.5*sw, cl, 2.5*sw, 0))
