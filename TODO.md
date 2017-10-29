@@ -12,3 +12,8 @@
     - Remove style from path itself, do it in CSS
     - On hover: hide lines, use fill instead
 - Variable angle
+- CLI interface in `__main__`
+    - Commands: preview, build font, save svgs
+- Come up with a simpler DSL for defining curves instead of SVG syntax
+    - Somehow make the handles of bezier curves disappear:
+      have properties like "initial angle" and "amplitude" for each end of a segment?
