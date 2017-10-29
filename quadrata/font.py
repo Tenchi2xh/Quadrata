@@ -64,8 +64,8 @@ def font_info(hand):
 
     font_info.unitsPerEm = hand.em
     font_info.xHeight = hand.xheight
-    font_info.ascender = hand.nib.width * 2   # TODO: Fix this
-    font_info.descender = hand.nib.width * 2  # TODO: Fix this
+    font_info.ascender = hand.ascender
+    font_info.descender = hand.descender
     font_info.capHeight = hand.nib.width * 2  # TODO: Fix this
 
     return font_info
