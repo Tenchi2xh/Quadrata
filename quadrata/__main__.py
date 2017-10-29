@@ -9,7 +9,7 @@ nib = foundational.nib
 
 dwg = svgwrite.Drawing()
 
-group = foundational.letter_m.form(dwg, nib)
+group = foundational.letter_q.form(dwg, nib)
 group["transform"] = "translate(50, 50)"
 
 dwg.add(group)

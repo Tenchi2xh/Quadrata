@@ -83,9 +83,9 @@ class Stroke(object):
 
 
 class Letter(object):
-    def __init__(self, strokes, offset_pairs):
-        self.strokes = strokes
-        self.offset_pairs = offset_pairs
+    def __init__(self, strokes=None, offset_pairs=None):
+        self.strokes = strokes or []
+        self.offset_pairs = offset_pairs or []
 
     def form(self, drawing, nib, style=default_style):
         group = drawing.g()
@@ -104,7 +104,7 @@ class Letter(object):
         return Letter(self.strokes + other.strokes,
                       self.offset_pairs + other.offset_pairs)
 
-    def add(self, stroke, offset_pair):
+    def add(self, stroke, offset_pair=(0, 0)):
         return Letter(self.strokes + [stroke],
                       self.offset_pairs + [offset_pair])
 
