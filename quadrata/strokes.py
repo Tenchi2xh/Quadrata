@@ -116,12 +116,13 @@ class Letter(object):
 
 
 class Hand(object):
-    def __init__(self, name, nib, xheight, ascender, descender, em, glyphs=None):
+    def __init__(self, name, nib,
+                 x_height, ascender_height, descender_height, em, glyphs=None):
         self.name = name
         self.nib = nib
-        self.xheight = xheight + nib.height
-        self.ascender = ascender
-        self.descender = descender
+        self.x_height = x_height + nib.height
+        self.ascender = self.x_height + ascender_height
+        self.descender = -descender_height
         self.em = em
         self.glyphs = glyphs or {}
 

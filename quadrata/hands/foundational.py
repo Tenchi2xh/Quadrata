@@ -21,9 +21,8 @@ descender_stem_without_club = Stroke(v(xh + de), tail)
 
 n_curve = Stroke(c(sw, -cl, 2*sw, -cl, 2*sw, cl), v(sh), tail)
 o_lower_curve = Stroke(c(-nw, nw, 0, sh + cy + nw, 3*sw, sh))
-q_upper_curve = Stroke(
-    c(1.5*nw, -nw, sw*4 - nw, -cm, sw*4, -cm)
-)
+q_upper_curve = Stroke(c(1.5*nw, -nw, sw*4 - nw, -cm, sw*4, -cm))
+u_lower_curve = Stroke()
 
 short_stem = (Letter()
     .add(short_stem_without_club)
@@ -37,9 +36,9 @@ letter_q = (Letter()
 
 foundational = Hand(name="Foundational Hand",
                     nib=nib,
-                    xheight=xh,
-                    ascender=ac,
-                    descender=de,
+                    x_height=xh,
+                    ascender_height=ac,
+                    descender_height=de,
                     em=sw * 6)
 
 foundational.glyphs = {

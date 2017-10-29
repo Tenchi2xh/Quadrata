@@ -33,9 +33,9 @@ def generate_glyphs(hand):
         glyph = svg2glif(path=path,
                          name=character,
                          width=hand.em,  # TODO: Find way to have correct width here
-                         height=hand.xheight,
+                         height=hand.x_height,
                          unicodes=[ord(character)],
-                         transform=(1, 0, 0, -1, hand.nib.stem_width, hand.xheight))
+                         transform=(1, 0, 0, -1, hand.nib.stem_width, hand.x_height))
         glyphs.append((character, glyph))
     return glyphs
 
@@ -63,10 +63,10 @@ def font_info(hand):
     font_info.styleName = "Regular"
 
     font_info.unitsPerEm = hand.em
-    font_info.xHeight = hand.xheight
+    font_info.xHeight = hand.x_height
     font_info.ascender = hand.ascender
     font_info.descender = hand.descender
-    font_info.capHeight = hand.nib.width * 2  # TODO: Fix this
+    font_info.capHeight = font_info.ascender  # TODO: Fix this
 
     return font_info
 
