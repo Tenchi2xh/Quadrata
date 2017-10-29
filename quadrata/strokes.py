@@ -100,19 +100,25 @@ class Letter(object):
             paths.append(stroke.path(nib, offsets=offsets))
         return " ".join(paths)
 
-    def combine(self, other):
-        return Letter(self.strokes + other.strokes,
-                      self.offset_pairs + other.offset_pairs)
+    def _add(self, other, offset_pair, base_offset):
+        if isinstance(other, Stroke):
+            new_offset = (base_offset[0] + offset_pair[0],
+                          base_offset[1] + offset_pair[1])
+            return Letter(self.strokes + [other],
+                          self.offset_pairs + [new_offset])
+        elif isinstance(other, Letter):
+            other_offsets = [(base_offset[0] + offset[0] + offset_pair[0],
+                              base_offset[1] + offset[1] + offset_pair[1])
+                             for offset in other.offset_pairs]
+            return Letter(self.strokes + other.strokes,
+                          self.offset_pairs + other_offsets)
 
-    def add(self, stroke, offset_pair=(0, 0)):
-        return Letter(self.strokes + [stroke],
-                      self.offset_pairs + [offset_pair])
+    def add(self, other, offset_pair=(0, 0)):
+        return self._add(other, offset_pair, (0, 0))
 
-    def add_relative(self, stroke, offset_pair):
-        new_offset = (self.offset_pairs[-1][0] + offset_pair[0],
-                      self.offset_pairs[-1][1] + offset_pair[1])
-        return Letter(self.strokes + [stroke],
-                      self.offset_pairs + [new_offset])
+    def add_relative(self, other, offset_pair):
+        base_offset = self.offset_pairs[-1][0], self.offset_pairs[-1][1]
+        return self._add(other, offset_pair, base_offset)
 
 
 class Hand(object):
