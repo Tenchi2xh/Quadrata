@@ -8,15 +8,25 @@ default_style = {
 
 
 class Nib(object):
-    def __init__(self, width, angle):
+    def __init__(self, width, angle, thickness=1):
         self.width = width
         self.angle = math.radians(angle)
+        self.thickness = thickness
+
         self.offset_x = int(width * math.cos(self.angle))
         self.offset_y = int(width * -math.sin(self.angle))
-        self.stem_width = width / math.cos(self.angle)  # cos(a) = stem / width
+        self.stem_width = width * math.cos(self.angle)  # cos(a) = stem / width
+
+    def _format_offsets(self, angle, width, sign):
+        return "l %s, %s" % (str(sign * width * math.cos(angle)),
+                             str(sign * width * -math.sin(angle)))
 
     def offsets(self, sign=1):
-        return "l %d, %d" % (sign * self.offset_x, sign * self.offset_y)
+        return self._format_offsets(self.angle, self.width, sign)
+
+    def thickness_offsets(self, sign=1):
+        rotated = self.angle - math.pi / 2
+        return self._format_offsets(rotated, self.thickness, sign)
 
 
 class Command(object):
@@ -61,9 +71,11 @@ class Stroke(object):
         parts = [
             "M %s, %s" % (str(offsets[0]), str(offsets[1])),
             str(self),
+            nib.thickness_offsets(1),
             nib.offsets(-1),
             str(self.reverse()),
-            nib.offsets()
+            nib.thickness_offsets(-1),
+            "Z"
         ]
 
         return " ".join(parts)
