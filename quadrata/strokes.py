@@ -2,7 +2,7 @@ import math
 
 default_style = {
     "stroke": "black",
-    "stroke_width": 2,
+    "stroke_width": 3,
     "fill": "black"
 }
 
@@ -88,6 +88,12 @@ class Letter(object):
     def add(self, stroke, offset_pair):
         return Letter(self.strokes + [stroke],
                       self.offset_pairs + [offset_pair])
+
+    def add_relative(self, stroke, offset_pair):
+        new_offset = (self.offset_pairs[-1][0] + offset_pair[0],
+                      self.offset_pairs[-1][1] + offset_pair[1])
+        return Letter(self.strokes + [stroke],
+                      self.offset_pairs + [new_offset])
 
 
 _short = lambda command: lambda *values: Command(command, *values)

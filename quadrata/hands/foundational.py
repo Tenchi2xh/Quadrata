@@ -25,5 +25,5 @@ short_stem = Letter(
     ]
 )
 
-letter_n = short_stem.add(n_curve, (sw - cl, cy))
-letter_m = letter_n.add(n_curve, (3*sw - cl, cy))
+letter_n = short_stem.add_relative(n_curve, (sw, 0))
+letter_m = letter_n.add_relative(n_curve, (2*sw, 0))
