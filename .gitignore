@@ -1,2 +1,4 @@
 *.sublime-*
 *.pyc
+.DS_Store
+bin/
