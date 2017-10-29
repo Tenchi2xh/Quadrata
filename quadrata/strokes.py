@@ -2,8 +2,8 @@ import math
 
 default_style = {
     "stroke": "black",
-    "stroke_width": 3,
-    "fill": "black"
+    "stroke_width": 1,
+    "fill": "none"
 }
 
 
