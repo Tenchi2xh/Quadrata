@@ -1,5 +1,11 @@
 import math
 
+default_style = {
+    "stroke": "black",
+    "stroke_width": 2,
+    "fill": "black"
+}
+
 
 class Nib(object):
     def __init__(self, width, angle):
@@ -23,6 +29,12 @@ class Command(object):
             A, B = a - c, b - d
             C, D = -c, -d
             return Command(self.command, A, B, C, D)
+        elif self.command == "c":
+            a, b, c, d, e, f = self.values
+            A, B = c - e, d - f
+            C, D = a - e, b - f
+            E, F = -e, -f
+            return Command(self.command, A, B, C, D, E, F)
         else:
             return Command(self.command, *(-value for value in self.values))
 
@@ -31,19 +43,22 @@ class Command(object):
         return "%s %s" % (self.command, values)
 
 
-class Data(object):
+class Stroke(object):
     def __init__(self, *commands):
         self.commands = commands
 
     def reverse(self):
-        return Data(*(command.reverse() for command in reversed(self.commands)))
+        return Stroke(*(command.reverse() for command in reversed(self.commands)))
 
     def __str__(self):
         return " ".join([str(command) for command in self.commands])
 
-    def stroke(self, nib):
+    def path(self, nib, offsets=None):
+        if not offsets:
+            offsets = (nib.offset_x, -nib.offset_y)
+
         parts = [
-            "M %d, %d" % (nib.offset_x, -nib.offset_y),
+            "M %s, %s" % (str(offsets[0]), str(offsets[1])),
             str(self),
             nib.offsets(-1),
             str(self.reverse()),
@@ -53,6 +68,30 @@ class Data(object):
         return " ".join(parts)
 
 
-short = lambda command: lambda *values: Command(command, *values)
-l, h, v, q = short("l"), short("h"), short("v"), short("q")
-d = Data
+class Letter(object):
+    def __init__(self, strokes, offset_pairs):
+        self.strokes = strokes
+        self.offset_pairs = offset_pairs
+
+    def form(self, drawing, nib, style=default_style):
+        group = drawing.g()
+        for stroke, offsets in zip(self.strokes, self.offset_pairs):
+            path = drawing.path(d=stroke.path(nib, offsets=offsets), **style)
+            group.add(path)
+        return group
+
+    def combine(self, other):
+        return Letter(self.strokes + other.strokes,
+                      self.offset_pairs + other.offset_pairs)
+
+    def add(self, stroke, offset_pair):
+        return Letter(self.strokes + [stroke],
+                      self.offset_pairs + [offset_pair])
+
+
+_short = lambda command: lambda *values: Command(command, *values)
+l = _short("l")
+h = _short("h")
+v = _short("v")
+q = _short("q")
+c = _short("c")
